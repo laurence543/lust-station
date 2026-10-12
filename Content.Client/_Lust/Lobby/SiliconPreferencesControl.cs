@@ -1,19 +1,27 @@
 using System.Linq;
 using Content.Shared._Sunrise.TTS;
 using Content.Shared.Preferences.Loadouts;
+using Robust.Client.UserInterface;
 using Content.Shared.Silicons.StationAi;
 using Content.Sunrise.Interfaces.Shared;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Lobby.UI.Loadouts;
+namespace Content.Client._Lust.Lobby;
 
-public sealed partial class LoadoutWindow
+/// <summary>
+/// Edits the silicon preferences stored alongside a role's custom name.
+/// </summary>
+public sealed class SiliconPreferencesControl : BoxContainer
 {
-    private void InitializeSiliconPreferences(RoleLoadout loadout, RoleLoadoutPrototype role, ICommonSession session,
+    public event Action? OnPreferencesChanged;
+
+    public SiliconPreferencesControl(RoleLoadout loadout, RoleLoadoutPrototype role, ICommonSession session,
         IDependencyCollection collection, ISharedSponsorsManager? sponsors)
     {
+        Orientation = LayoutOrientation.Vertical;
+        Visible = role.CanCustomizeSiliconVoice || role.CanCustomizeStationAi;
         var prototype = collection.Resolve<IPrototypeManager>();
         if (role.CanCustomizeSiliconVoice)
         {
@@ -49,8 +57,7 @@ public sealed partial class LoadoutWindow
 
     private void AddSiliconOption(string label, string? selected, (string Id, string Name)[] options, Action<string?> changed)
     {
-        SiliconPreferencesContainer.Visible = true;
-        SiliconPreferencesContainer.AddChild(new Label { Text = Loc.GetString(label) });
+        AddChild(new Label { Text = Loc.GetString(label) });
         var button = new OptionButton { HorizontalExpand = true };
         button.AddItem(Loc.GetString("silicon-preferences-default"), 0);
         var selectedIndex = 0;
@@ -65,8 +72,8 @@ public sealed partial class LoadoutWindow
         {
             button.SelectId(args.Id);
             changed(args.Id == 0 ? null : options[args.Id - 1].Id);
-            OnSiliconPreferencesChanged?.Invoke();
+            OnPreferencesChanged?.Invoke();
         };
-        SiliconPreferencesContainer.AddChild(button);
+        AddChild(button);
     }
 }

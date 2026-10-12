@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server._Sunrise.TTS;
 using Content.Shared._Sunrise.TTS;
-using Content.Shared._Lust.Preferences;
 using Content.Shared.Popups;
 using Content.Sunrise.Interfaces.Shared;
 using Robust.Server.GameObjects;
@@ -97,20 +96,6 @@ public sealed partial class SiliconVoiceSystem : EntitySystem
 
     private void OnBorgVoiceStartup(EntityUid uid, BorgVoiceComponent component, ref MapInitEvent args)
     {
-        // Lust edit — голос из профиля применяется после появления компонента в ядре сИИ.
-        if (TryComp<SiliconVoicePreferenceComponent>(uid, out var preference) &&
-            _prototypeManager.TryIndex(preference.Voice, out var savedVoice) && savedVoice.RoundStart &&
-            (component.VoiceWhitelist == null || component.VoiceWhitelist.Count == 0 || component.VoiceWhitelist.Contains(preference.Voice)) &&
-            (component.VoiceBlacklist == null || !component.VoiceBlacklist.Contains(preference.Voice)))
-        {
-            component.SelectedVoiceId = preference.Voice;
-            var tts = EnsureComp<TTSComponent>(uid);
-            tts.VoicePrototypeId = preference.Voice;
-            Dirty(uid, tts);
-            RemComp<SiliconVoicePreferenceComponent>(uid);
-            Dirty(uid, component);
-        }
-
         if (component.SelectedVoiceId != null)
             return;
 

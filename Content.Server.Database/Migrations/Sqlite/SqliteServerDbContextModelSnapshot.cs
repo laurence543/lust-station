@@ -15,7 +15,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.6");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
             modelBuilder.Entity("Content.Server.Database.AHelpMessage", b =>
                 {
@@ -1551,6 +1551,31 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("trait", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.UiLike", b =>
+                {
+                    b.Property<string>("ScopeId")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("scope_id");
+
+                    b.Property<string>("ItemId")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("item_id");
+
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_user_id");
+
+                    b.HasKey("ScopeId", "ItemId", "PlayerUserId")
+                        .HasName("PK_ui_likes");
+
+                    b.HasIndex("PlayerUserId", "ScopeId")
+                        .HasDatabaseName("IX_ui_likes_player_user_id_scope_id");
+
+                    b.ToTable("ui_likes", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.TutorialCompletion", b =>
                 {
                     b.Property<Guid>("PlayerUserId")
@@ -1583,31 +1608,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasDatabaseName("IX_tutorial_completion_tutorial_id");
 
                     b.ToTable("tutorial_completion", (string)null);
-                });
-
-            modelBuilder.Entity("Content.Server.Database.UiLike", b =>
-                {
-                    b.Property<string>("ScopeId")
-                        .HasMaxLength(128)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("scope_id");
-
-                    b.Property<string>("ItemId")
-                        .HasMaxLength(128)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("item_id");
-
-                    b.Property<Guid>("PlayerUserId")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("player_user_id");
-
-                    b.HasKey("ScopeId", "ItemId", "PlayerUserId")
-                        .HasName("PK_ui_likes");
-
-                    b.HasIndex("PlayerUserId", "ScopeId")
-                        .HasDatabaseName("IX_ui_likes_player_user_id_scope_id");
-
-                    b.ToTable("ui_likes", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Unban", b =>
@@ -2374,9 +2374,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     b.Navigation("Antags");
 
-                    b.Navigation("ErpData");
-
                     b.Navigation("JobAlternativeTitles");
+
+                    b.Navigation("ErpData");
 
                     b.Navigation("Jobs");
 

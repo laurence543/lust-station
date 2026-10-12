@@ -516,49 +516,41 @@
 - type: roleLoadout
   id: JobPeaceBorg
   nameDataset: NamesBorg
-  canCustomizeSiliconVoice: true # Lust edit
   canCustomizeName: true
 
 - type: roleLoadout
   id: JobJanitorBorg
   nameDataset: NamesBorg
-  canCustomizeSiliconVoice: true # Lust edit
   canCustomizeName: true
 
 - type: roleLoadout
   id: JobMiningBorg
   nameDataset: NamesBorg
-  canCustomizeSiliconVoice: true # Lust edit
   canCustomizeName: true
 
 - type: roleLoadout
   id: JobClownBorg
   nameDataset: NamesBorg
-  canCustomizeSiliconVoice: true # Lust edit
   canCustomizeName: true
 
 - type: roleLoadout
   id: JobEngineerBorg
   nameDataset: NamesBorg
-  canCustomizeSiliconVoice: true # Lust edit
   canCustomizeName: true
 
 - type: roleLoadout
   id: JobServiceBorg
   nameDataset: NamesBorg
-  canCustomizeSiliconVoice: true # Lust edit
   canCustomizeName: true
 
 - type: roleLoadout
   id: JobMedicalBorg
   nameDataset: NamesBorg
-  canCustomizeSiliconVoice: true # Lust edit
   canCustomizeName: true
 
 - type: roleLoadout
   id: JobSecurityBorg
   nameDataset: NamesBorg
-  canCustomizeSiliconVoice: true # Lust edit
   canCustomizeName: true
 
 - type: roleLoadout

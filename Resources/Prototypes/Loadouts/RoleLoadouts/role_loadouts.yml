@@ -31,14 +31,11 @@
 - type: roleLoadout
   id: JobBorg
   nameDataset: NamesBorg
-  canCustomizeSiliconVoice: true # Lust edit
   canCustomizeName: true
 
 - type: roleLoadout
   id: JobStationAi
   nameDataset: NamesAI
-  canCustomizeSiliconVoice: true # Lust edit
-  canCustomizeStationAi: true # Lust edit
   canCustomizeName: true
 
 # Civilian

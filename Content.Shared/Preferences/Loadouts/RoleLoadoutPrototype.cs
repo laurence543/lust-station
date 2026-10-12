@@ -9,14 +9,12 @@ namespace Content.Shared.Preferences.Loadouts;
 [Prototype]
 public sealed partial class RoleLoadoutPrototype : IPrototype
 {
-    // Lust edit — возможности настройки силиконов задаются прототипом роли
+    // Lust edit — используем существующие наборы имён силиконовых ролей, включая специализации боргов.
     /// <summary>Whether this role supports a saved silicon voice.</summary>
-    [DataField]
-    public bool CanCustomizeSiliconVoice;
+    public bool CanCustomizeSiliconVoice => NameDataset?.Id == "NamesBorg" || CanCustomizeStationAi;
 
     /// <summary>Whether this role supports station AI appearance preferences.</summary>
-    [DataField]
-    public bool CanCustomizeStationAi;
+    public bool CanCustomizeStationAi => NameDataset?.Id == "NamesAI";
 
     /*
      * Separate to JobPrototype / AntagPrototype as they are turning into messy god classes.

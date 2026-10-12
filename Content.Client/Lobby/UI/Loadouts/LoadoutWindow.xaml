@@ -15,7 +15,7 @@
             </PanelContainer>
         </BoxContainer>
         <!-- Lust edit — преднастройки силиконов -->
-        <BoxContainer Name="SiliconPreferencesContainer" Orientation="Vertical" Margin="10" Visible="False" />
+        <BoxContainer Name="SiliconPreferencesContainer" Orientation="Vertical" Margin="10" />
         <VerticalTabContainer Name="LoadoutGroupsContainer"
                               VerticalExpand="True"
                               HorizontalExpand="True">
