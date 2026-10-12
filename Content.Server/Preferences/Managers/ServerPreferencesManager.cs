@@ -149,6 +149,9 @@ namespace Content.Server.Preferences.Managers
                 var loadout = new RoleLoadout(role.RoleName)
                 {
                     EntityName = role.EntityName,
+                    SiliconVoice = role.SiliconVoice, // Lust edit
+                    StationAiScreen = role.StationAiScreen,
+                    StationAiHologram = role.StationAiHologram,
                 };
 
                 foreach (var group in role.Groups)

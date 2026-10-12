@@ -411,6 +411,11 @@ namespace Content.Server.Database
     /// </summary>
     public class ProfileRoleLoadout
     {
+        // Lust edit — отдельные настройки для каждой роли и слота персонажа
+        public string? SiliconVoice { get; set; }
+        public string? StationAiScreen { get; set; }
+        public string? StationAiHologram { get; set; }
+
         public int Id { get; set; }
 
         public int ProfileId { get; set; }

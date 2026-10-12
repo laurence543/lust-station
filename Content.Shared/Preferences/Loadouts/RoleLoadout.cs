@@ -34,6 +34,19 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     [DataField]
     public string? EntityName;
 
+    // Lust edit — сохраняемые предпочтения силиконов
+    /// <summary>Preferred round-start TTS voice for this silicon role.</summary>
+    [DataField]
+    public string? SiliconVoice;
+
+    /// <summary>Preferred station AI core iconography.</summary>
+    [DataField]
+    public string? StationAiScreen;
+
+    /// <summary>Preferred station AI holographic avatar.</summary>
+    [DataField]
+    public string? StationAiHologram;
+
     /*
      * Loadout-specific data used for validation.
      */
@@ -55,6 +68,9 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         }
 
         weh.EntityName = EntityName;
+        weh.SiliconVoice = SiliconVoice; // Lust edit — копируем настройки роли
+        weh.StationAiScreen = StationAiScreen;
+        weh.StationAiHologram = StationAiHologram;
 
         return weh;
     }
@@ -74,9 +90,14 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         // Sunrise-end
         {
             EntityName = null;
+            SiliconVoice = null; // Lust edit — удалённая роль не сохраняет предпочтения
+            StationAiScreen = null;
+            StationAiHologram = null;
             SelectedLoadouts.Clear();
             return;
         }
+
+        ValidateSiliconPreferences(roleProto, protoManager, sponsorPrototypes); // Lust edit
 
         // Remove name not allowed.
         if (!roleProto.CanCustomizeName)
@@ -377,7 +398,10 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         if (!Role.Equals(other.Role) ||
             SelectedLoadouts.Count != other.SelectedLoadouts.Count ||
             Points != other.Points ||
-            EntityName != other.EntityName)
+            EntityName != other.EntityName ||
+            SiliconVoice != other.SiliconVoice || // Lust edit — учитываем настройки роли
+            StationAiScreen != other.StationAiScreen ||
+            StationAiHologram != other.StationAiHologram)
         {
             return false;
         }

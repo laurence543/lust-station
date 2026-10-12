@@ -67,6 +67,13 @@ public sealed partial class HumanoidProfileEditor
         _loadoutWindow.RefreshLoadouts(roleLoadout, session, collection);
         _loadoutWindow.OpenCenteredLeft();
 
+        // Lust edit — любое изменение настроек роли сохраняется одинаково.
+        _loadoutWindow.OnLoadoutChanged += () =>
+        {
+            Profile = Profile?.WithLoadout(roleLoadout);
+            SetDirty();
+        };
+
         _loadoutWindow.OnNameChanged += name =>
         {
             roleLoadout.EntityName = name;

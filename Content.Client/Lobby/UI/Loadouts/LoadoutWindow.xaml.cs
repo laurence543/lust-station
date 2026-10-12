@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client._Lust.Lobby; // Lust edit
 using Content.Client.UserInterface.Controls;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
@@ -19,6 +20,7 @@ namespace Content.Client.Lobby.UI.Loadouts;
 public sealed partial class LoadoutWindow : FancyWindow
 {
     public event Action<string>? OnNameChanged;
+    public event Action? OnLoadoutChanged; // Lust edit
     public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>>? OnLoadoutPressed;
     public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>>? OnLoadoutUnpressed;
 
@@ -58,6 +60,11 @@ public sealed partial class LoadoutWindow : FancyWindow
             RoleNameEdit.Text = name ?? string.Empty;
             RoleNameEdit.OnTextChanged += args => OnNameChanged?.Invoke(args.Text);
         }
+
+        // Lust edit — настройки силикона находятся рядом с именем роли.
+        var siliconPreferences = new SiliconPreferencesControl(loadout, proto, session, collection, sponsorsManager);
+        siliconPreferences.OnPreferencesChanged += () => OnLoadoutChanged?.Invoke();
+        SiliconPreferencesContainer.AddChild(siliconPreferences);
 
         // Hide if no groups
         if (proto.Groups.Count == 0)

@@ -1478,6 +1478,18 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("role_name");
 
+                    b.Property<string>("SiliconVoice")
+                        .HasColumnType("text")
+                        .HasColumnName("silicon_voice");
+
+                    b.Property<string>("StationAiHologram")
+                        .HasColumnType("text")
+                        .HasColumnName("station_ai_hologram");
+
+                    b.Property<string>("StationAiScreen")
+                        .HasColumnType("text")
+                        .HasColumnName("station_ai_screen");
+
                     b.HasKey("Id")
                         .HasName("PK_profile_role_loadout");
 

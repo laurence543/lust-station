@@ -1399,6 +1399,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("role_name");
 
+                    b.Property<string>("SiliconVoice")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("silicon_voice");
+
+                    b.Property<string>("StationAiHologram")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("station_ai_hologram");
+
+                    b.Property<string>("StationAiScreen")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("station_ai_screen");
+
                     b.HasKey("Id")
                         .HasName("PK_profile_role_loadout");
 
