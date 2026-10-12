@@ -274,6 +274,9 @@ namespace Content.Server.Database
                 {
                     RoleName = role,
                     EntityName = loadouts.EntityName ?? string.Empty,
+                    SiliconVoice = loadouts.SiliconVoice, // Lust edit
+                    StationAiScreen = loadouts.StationAiScreen,
+                    StationAiHologram = loadouts.StationAiHologram,
                 };
 
                 foreach (var (group, groupLoadouts) in loadouts.SelectedLoadouts)

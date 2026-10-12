@@ -1,4 +1,4 @@
-﻿using Content.Shared._Lust.ErpStatus;
+using Content.Shared._Lust.ErpStatus;
 using Content.Server.Access.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Mind;
@@ -153,6 +153,7 @@ public sealed partial class StationSpawningSystem : SharedStationSpawningSystem
             if (loadout != null)
             {
                 EquipRoleName(jobEntity, loadout, roleProto!);
+                ApplySiliconPreferences(jobEntity, loadout, roleProto!); // Lust edit
             }
 
             DoJobSpecials(job, jobEntity);

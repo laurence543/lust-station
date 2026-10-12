@@ -19,6 +19,7 @@ namespace Content.Client.Lobby.UI.Loadouts;
 public sealed partial class LoadoutWindow : FancyWindow
 {
     public event Action<string>? OnNameChanged;
+    public event Action? OnSiliconPreferencesChanged; // Lust edit
     public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>>? OnLoadoutPressed;
     public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>>? OnLoadoutUnpressed;
 
@@ -58,6 +59,8 @@ public sealed partial class LoadoutWindow : FancyWindow
             RoleNameEdit.Text = name ?? string.Empty;
             RoleNameEdit.OnTextChanged += args => OnNameChanged?.Invoke(args.Text);
         }
+
+        InitializeSiliconPreferences(loadout, proto, session, collection, sponsorsManager); // Lust edit
 
         // Hide if no groups
         if (proto.Groups.Count == 0)

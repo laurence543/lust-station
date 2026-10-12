@@ -9,6 +9,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
@@ -124,6 +125,46 @@ namespace Content.IntegrationTests.Tests.Preferences
             var prefs = await db.GetPlayerPreferencesAsync(username);
             var profile = preferences.ConvertProfiles(prefs!.Profiles.Find(p => p.Slot == slot));
             Assert.That(profile.MemberwiseEquals(originalProfile));
+        }
+
+        // Lust edit — проверяем сохранение и обновление предпочтений роли в базе
+        [Test]
+        public async Task SiliconPreferencesPersistPerCharacterSlot()
+        {
+            var db = GetDb(Pair.Server);
+            var preferences = (ServerPreferencesManager) Pair.Server.ResolveDependency<IServerPreferencesManager>();
+            var user = NewUserId();
+            var original = CharlieCharlieson().WithLoadout(new RoleLoadout("JobStationAi")
+            {
+                SiliconVoice = "voice-one",
+                StationAiScreen = "StationAiIconClown",
+                StationAiHologram = "StationAiHologramCat",
+            });
+            await db.InitPrefsAsync(user, original);
+            await db.SaveCharacterSlotAsync(user, CharlieCharlieson(), 1);
+            var saved = await db.GetPlayerPreferencesAsync(user);
+            var first = preferences.ConvertProfiles(saved!.Profiles.Find(profile => profile.Slot == 0));
+            var second = preferences.ConvertProfiles(saved.Profiles.Find(profile => profile.Slot == 1));
+            var loadout = first.Loadouts["JobStationAi"];
+            Assert.Multiple(() =>
+            {
+                Assert.That(loadout.SiliconVoice, Is.EqualTo("voice-one"));
+                Assert.That(loadout.StationAiScreen, Is.EqualTo("StationAiIconClown"));
+                Assert.That(loadout.StationAiHologram, Is.EqualTo("StationAiHologramCat"));
+                Assert.That(second.Loadouts.ContainsKey("JobStationAi"), Is.False);
+            });
+            loadout.SiliconVoice = null;
+            loadout.StationAiScreen = null;
+            loadout.StationAiHologram = null;
+            await db.SaveCharacterSlotAsync(user, first.WithLoadout(loadout), 0);
+            saved = await db.GetPlayerPreferencesAsync(user);
+            var reset = preferences.ConvertProfiles(saved!.Profiles.Find(profile => profile.Slot == 0)).Loadouts["JobStationAi"];
+            Assert.Multiple(() =>
+            {
+                Assert.That(reset.SiliconVoice, Is.Null);
+                Assert.That(reset.StationAiScreen, Is.Null);
+                Assert.That(reset.StationAiHologram, Is.Null);
+            });
         }
 
         [Test]
